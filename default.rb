@@ -7,12 +7,16 @@
 
 puts "\e[H\e[2J"
 
-#static IP (in progress)
-#execute 'static ip setup' do
- #action :run
- #command 'xterm -e ruby /etc/chef/staticip.rb'
-#end
-#system('cp /home/vagrant/Desktop/dl-elk/files/default/ipinfo /etc/sysconfig/network-scripts/ifcfg-enp0s3')
+#DNS
+ #system('cat /etc/dl/dl-elk/files/default/ipinfo.txt | grep "DNS1=.*" >> /etc/dl/dl-elk/files/default/')
+ #system('cat /etc/dl/dl-elk/files/default/ipinfo.txt | grep "DNS2=.*" >> /etc/dl/dl-elk/files/default/')
+
+#default gateway
+ #system('cat /etc/dl/dl-elk/files/default/ipinfo.txt | grep "DEFAULT=.*" >> /etc/dl/dl-elk/files/default/resolv.conf')
+
+#STATIC IP
+ #system('cat /etc/dl/dl-elk/files/default/ipinfo.txt | grep "IPADDR=.*" >> /etc/dl/dl-elk/files/default/ifcfg-enp0s3')
+ #system('cat /etc/dl/dl-elk/files/default/ipinfo.txt | grep "NETMASK=.*" >> /etc/dl/dl-elk/files/default/ifcfg-enp0s3')
 
 execute 'stop packagekitd (yum lock)' do
  action :run
@@ -107,7 +111,7 @@ package 'httpd-tools'
 
 
 #logstash
-repository "logstash" do
+yum_repository "logstash" do
     description 'Elastic repository for 5.x packages'
     baseurl 'https://artifacts.elastic.co/packages/5.x/yum'
     gpgkey 'https://artifacts.elastic.co/GPG-KEY-elasticsearch'
