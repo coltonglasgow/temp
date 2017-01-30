@@ -1,5 +1,11 @@
 #Champtc 12-21-2016
 
+#http password
+execute 'configure kibana htaccess' do
+ action :run
+ command '~/chef-repo/dl-elk/files/default/ipconfig.rb'
+end
+
 execute 'stop packagekitd (yum lock)' do
  action :run
  command 'systemctl stop packagekit.service'
@@ -47,12 +53,6 @@ end
 
 #httpd-tools
 yum_package 'httpd-tools' do
-end
-
-#http password
-execute 'configure kibana htaccess' do
- action :run
- command 'xterm -e ruby /etc/chef/kibanauser.rb'
 end
 
 yum_package 'logstash' do
