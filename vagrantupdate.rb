@@ -25,37 +25,19 @@ end
 yum_package 'nano' do
 end
 
-#change user pw
-execute 'change user (vagrant) password' do
- action :run
- command 'xterm -e passwd vagrant'
-end
+#user config
 
-#change root pw
-execute 'change root password' do
- action :run
- command 'xterm -e passwd'
-end
 
-#static IP (in progress)
-execute 'static ip setup' do
- action :run
- command 'xterm -e ruby /etc/chef/staticip.rb'
-end
 
-yum_package 'elasticsearch' do
-end
+package 'elasticsearch'
 
-yum_package 'kibana' do
-end
+package 'kibana' 
 
 #epel-release
-yum_package 'epel-release' do
-end
+package 'epel-release'
 
 #Nginx
-yum_package 'nginx' do
-end
+package 'nginx'
 
     #server block
 execute 'create kibana.conf' do
@@ -87,11 +69,11 @@ system('/etc/logstash/geo-update.bash > /dev/null 2>&1')
 #activemq
 execute 'makes activemq.sh executable' do
  action :run
- command 'chmod +x /etc/chef/activemq.sh'
+ command 'chmod +x ~/chef-repo/dl-elk/files/default/activemq.sh'
 end
 execute 'installs activemq' do
  action :run
- command './etc/chef/activemq.sh'
+ command '.~/chef-repo/dl-elk/files/default/activemq.sh'
 end
 
 execute 'start packagekitd (was stopped)' do
