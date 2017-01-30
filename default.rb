@@ -7,6 +7,27 @@
 
 puts "\e[H\e[2J"
 
+#user config
+execute 'configuring user input passwords' do
+ action :run
+ command 'ruby ~/chef-repo/dl-elk/files/default/kibanauser.rb'
+end
+
+
+#system time
+package 'ntp'
+
+execute 'enable ntpd on startup' do
+ action :run
+ command'/sbin/chkconfig ntdp on'
+end
+
+execute 'start ntpd' do
+action :run
+command '/etc/init.d/ntpd start'
+end
+ 
+#yum lock
 execute 'stop packagekitd (yum lock)' do
  action :run
  command 'systemctl stop packagekit.service'
@@ -84,19 +105,12 @@ package 'nginx'
 #nginx.conf edit
 execute 'nginx.conf edit' do
  action :run
- command 'cp /etc/chef/nginx.conf /etc/nginx/nginx.conf'
+ command 'cp ~/chef-repo/dl-elk/files/default/nginx.conf /etc/nginx/nginx.conf'
 end
 
 
 #httpd-tools
 package 'httpd-tools'
-
-
-#http password
-#execute 'configure kibana htaccess' do
- #action :run
- #command 'xterm -e ruby /etc/chef/kibanauser.rb'
-#end
 
 
 #logstash
@@ -155,11 +169,11 @@ system('semanage port -a -t http_port_t -p tcp 5601')
 #activemq
 execute 'makes activemq.sh executable' do
  action :run
- command 'chmod +x /etc/chef/activemq.sh'
+ command 'chmod +x ~/chef-repo/dl-elk/files/default/activemq.sh'
 end
 execute 'installs activemq' do
  action :run
- command './etc/chef/activemq.sh'
+ command '~/chef-repo/dl-elk/files/default//activemq.sh'
 end
 
 
