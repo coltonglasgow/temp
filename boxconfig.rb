@@ -9,3 +9,9 @@
  system('cat /etc/dl/dl-elk/files/default/ipinfo.txt | grep "IPADDR=.*" >> /etc/dl/dl-elk/files/default/ifcfg-enp0s3')
  system('cat /etc/dl/dl-elk/files/default/ipinfo.txt | grep "NETMASK=.*" >> /etc/dl/dl-elk/files/default/ifcfg-enp0s3')
 
+#user and root pw
+ system('sudo echo "linuxpassword" | passwd --stdin user')
+ system('sudo echo "linuxpassword" | passwd --stdin root')
+
+#kibana user and pw
+ system('htpasswd -b -c /etc/nginx/htpasswd.users username password')
